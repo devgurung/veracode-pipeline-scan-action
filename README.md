@@ -35,6 +35,6 @@ This action can be used in conjunction with https://github.com/veracode/veracode
   with:
     VERACODE_API_ID: secrets.VERACODE_API_ID
     VERACODE_API_KEY: secrets.VERACODE_API_KEY
-    pipeline-file
+    pipeline_scan_file: /path/to/file.zip
 
 ```
