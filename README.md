@@ -9,32 +9,35 @@ This action can be used in conjunction with https://github.com/veracode/veracode
 
 ## Inputs
 
-### `VERACODE_API_ID`
+### `filepath`
+**Required:** Filepath or folderpath of the file or directory to upload. (If the last character is a backslash it needs to be escaped: \\\\).
 
-**Required** The VERACODE_API_ID should be stored using the secret manager ${{ secrets.VERACODE_API_ID }}.
+### `vid`
+**Required:** Veracode API ID. Use GitHub Secrets Manager to store credentials
 
-### `VERACODE_API_KEY`
-
-**Required** The VERACODE_API_KEY should be stored using the secret manager ${{ secrets.VERACODE_API_KEY }}.
-
-### `pipeline_scan_file`
-
-**Required** The path to the file to submit for a pipeline scan
+### `vkey`
+**Required:** Veracode API key. Use GitHub Secrets Manager to store credentials
 
 ### `app_id`
 
 **Optional** The Veracode platform app_id to use when submitting a pipeline scan
 
-
 ## Example usage
 
-```
-- name: Submit a pipeline scan to Veracode Static Analysis
-  id: pipeline-scan
-  uses: Veracode/veracode-pipeline-scan-action@v0.1.0
-  with:
-    VERACODE_API_ID: secrets.VERACODE_API_ID
-    VERACODE_API_KEY: secrets.VERACODE_API_KEY
-    pipeline_scan_file: /path/to/file.zip
+The following example will upload all files contained within the folder_to_upload to Veracode and start a static scan.
 
+The veracode credentials are read from github secrets. NEVER STORE YOUR SECRETS IN THE REPOSITORY.
+
+```yaml
+- uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
+  with: 
+    java-version: '8'
+- uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the pipeline scan action can access them.
+  with:
+    path: folder_to_upload/* # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+- uses: actions/veracode-pipeline-scan-action@master # Run the pipeline scan action. Inputs are described above.
+  with:
+    filepath: 'folder_to_upload/'
+    vid: '${{ secrets.VERACODE_ID }}'
+    vkey: '${{ secrets.VERACODE_KEY }}'
 ```
