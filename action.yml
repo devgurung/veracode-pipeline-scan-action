@@ -1,5 +1,5 @@
 name: 'Veracode Static Analysis Pipeline Scan'
-description: 'Upload files to Veracode Static Analysis pipeline scan.'
+description: 'Upload files to Veracode Static Analysis pipeline scan for analysis.'
 inputs:
   appid:  # id of app
     description: 'appid'
@@ -13,13 +13,22 @@ inputs:
   vkey:  # id of input
     description: 'vkey'
     required: true
-# outputs:
-#   result: #results.json
+outputs:
+  result: #results.json
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.appid }}
-    - ${{ inputs.filepath }}
-    - ${{ inputs.vid }}
-    - ${{ inputs.vkey }}
+  pipeline-scan:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+        java-version: 1.8
+        - name: Download the Pipeline Scanner
+        uses: wei/curl@master
+        with:
+        args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+        - name: Unzip the Pipeline Scanner
+        run: unzip pipeline-scan-LATEST.zip
+        - name: Run Pipeline Scanner
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "${{inputs.filepath}}" --fail_on_severity="Very High, High"
+        continue-on-error: true
