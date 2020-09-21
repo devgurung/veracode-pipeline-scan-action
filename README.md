@@ -10,7 +10,7 @@ This action can be used in conjunction with https://github.com/veracode/veracode
 ## Inputs
 
 ### `filepath`
-**Required:** Filepath or folderpath of the file or directory to upload. (If the last character is a backslash it needs to be escaped: \\\\).
+**Required:** Filepath of the file to scan. For complete details of pipeline scan expected packaging of files and detailed options for the pipeline scan, please consult the Veracode Help Center documentation - https://help.veracode.com/reader/tS9CaFwL4_lbIEWWomsJoA/YEbb9w21qPx0xGaIXTB3zw.
 
 ## Example usage
 
