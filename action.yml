@@ -1,14 +1,9 @@
 name: 'Veracode Static Analysis Pipeline Scan'
 description: 'Upload files to Veracode Static Analysis pipeline scan for analysis.'
 inputs:
-  appid:  # id of app
-    description: 'appid'
-    required: false
   filepath:  # id of input filepath
     description: 'filepath'
     required: true
-outputs:
-  result: results.json
 runs:
   pipeline-scan:
         runs-on: ubuntu-latest
