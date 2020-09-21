@@ -8,7 +8,7 @@ inputs:
     description: 'filepath'
     required: true
 outputs:
-  result: #results.json
+  result: results.json
 runs:
   pipeline-scan:
         runs-on: ubuntu-latest
