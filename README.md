@@ -12,19 +12,9 @@ This action can be used in conjunction with https://github.com/veracode/veracode
 ### `filepath`
 **Required:** Filepath or folderpath of the file or directory to upload. (If the last character is a backslash it needs to be escaped: \\\\).
 
-### `vid`
-**Required:** Veracode API ID. Use GitHub Secrets Manager to store credentials
-
-### `vkey`
-**Required:** Veracode API key. Use GitHub Secrets Manager to store credentials
-
-### `app_id`
-
-**Optional** The Veracode platform app_id to use when submitting a pipeline scan
-
 ## Example usage
 
-The following example will upload all files contained within the folder_to_upload to Veracode and start a static scan.
+The example in .github/workflows/main.yml will submit the file specified in the filepath option for a pipeline scan and convert the json results from the scan to SARIF format and upload to GitHub as code scanning alerts.
 
 The veracode credentials are read from github secrets. NEVER STORE YOUR SECRETS IN THE REPOSITORY.
 
