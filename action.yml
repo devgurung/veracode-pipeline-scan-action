@@ -7,12 +7,6 @@ inputs:
   filepath:  # id of input filepath
     description: 'filepath'
     required: true
-  vid:  # id of input
-    description: 'vid'
-    required: true
-  vkey:  # id of input
-    description: 'vkey'
-    required: true
 outputs:
   result: #results.json
 runs:
